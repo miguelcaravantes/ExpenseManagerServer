@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.Core.Executor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,34 @@ namespace ExpenseManager.Configuration
                        .AllowCredentials();
                    });
             });
+
+
+            services.AddTransient<Executor>();
+            AddRequestHandlers(services);
+
+        }
+
+        public static IServiceCollection AddRequestHandlers(IServiceCollection services)
+        {
+            var types = new[]{
+                typeof(IAsyncInteractor<>),
+                typeof(IAsyncInteractor<,>),
+                typeof(IInteractor<>),
+                typeof(IInteractor<,>),
+            };
+            var requestInteractorTypes = typeof(IInteractor<>).Assembly.GetTypes()
+                .Where(t =>
+                    t.GetInterfaces().Any(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()))
+                    ).ToList();
+
+            foreach (var t in requestInteractorTypes)
+            {
+                var handlerInterface = t.GetInterfaces().Single(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()));
+                services.AddTransient(handlerInterface, t);
+            }
+
+            return services;
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
