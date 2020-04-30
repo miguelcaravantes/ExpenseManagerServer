@@ -32,8 +32,7 @@ namespace ExpenseManager.Configuration
                    {
                        builder.AllowAnyOrigin()
                        .AllowAnyHeader()
-                       .AllowAnyMethod()
-                       .AllowCredentials();
+                       .AllowAnyMethod();
                    });
             });
 
