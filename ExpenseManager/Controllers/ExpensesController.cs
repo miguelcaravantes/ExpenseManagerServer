@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +15,7 @@ namespace ExpenseManager.Controllers
 
         private readonly ILogger<ExpensesController> _logger;
 
-        public ExpensesController(ILogger<ExpensesController> logger)
+        public ExpensesController(ILogger<ExpensesController> logger, DataContext _context)
         {
             _logger = logger;
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpenseManager.Core.Executor;
+using ExpenseManager.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +38,9 @@ namespace ExpenseManager.Configuration
                    });
             });
 
+
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("database"));
+            
 
             services.AddTransient<Executor>();
             AddRequestHandlers(services);
@@ -67,6 +72,8 @@ namespace ExpenseManager.Configuration
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
