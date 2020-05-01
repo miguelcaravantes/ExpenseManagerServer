@@ -15,7 +15,7 @@ namespace ExpenseManager.Controllers
 
         private readonly ILogger<ExpensesController> _logger;
 
-        public ExpensesController(ILogger<ExpensesController> logger, DataContext _context)
+        public ExpensesController(ILogger<ExpensesController> logger)
         {
             _logger = logger;
         }
