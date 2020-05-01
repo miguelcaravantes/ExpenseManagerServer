@@ -6,7 +6,7 @@ namespace ExpenseManager.Core.Entities
     public class Expense
     {
         public string Name { get; private set; }
-        public decimal Ammount { get; set; }
+        public decimal Ammount { get; private set; }
         public string Description { get; private set; }
         public DateTime CreatedDate { get; private set; }
 
