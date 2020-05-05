@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ExpenseManager.Core.Entities;
 using AutoMapper;
 using System.Threading;
+using ExpenseManager.Data.Entities;
 
 namespace ExpenseManager.Data.Repositories
 {
@@ -19,7 +20,7 @@ namespace ExpenseManager.Data.Repositories
 
         public async Task CreateExpenseAsync(Expense expense, CancellationToken cancellationToken = default)
         {
-            var dbEntity = _mapper.Map<ExpenseManager.Data.Entities.Expense>(expense);
+            var dbEntity = _mapper.Map<DbExpense>(expense);
             await _db.AddAsync(dbEntity, cancellationToken);
         }
 

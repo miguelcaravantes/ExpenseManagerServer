@@ -1,5 +1,6 @@
 using AutoMapper;
 using ExpenseManager.Core.Entities;
+using ExpenseManager.Data.Entities;
 
 namespace ExpenseManager.Configuration
 {
@@ -7,7 +8,7 @@ namespace ExpenseManager.Configuration
     {
         public ExpenseProfile()
         {
-            CreateMap<Expense, ExpenseManager.Data.Entities.Expense>();
+            CreateMap<Expense, DbExpense>();
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace ExpenseManager.Data.Entities
 {
-    public class Expense
+    public class DbExpense
     {
         public Guid ExpenseId { get; set; }
         public string Name { get; set; }

@@ -12,12 +12,12 @@ namespace ExpenseManager.Data
 
     public class DataContext : DbContext, IUnitOfWork
     {
-        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<DbExpense> Expenses { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Expense>();
+            modelBuilder.Entity<DbExpense>();
             var mappings = this.GetType().Assembly.GetTypes().Where(t => t.IsAssignableFrom(typeof(IEntityBuilder<>)));
         }
 

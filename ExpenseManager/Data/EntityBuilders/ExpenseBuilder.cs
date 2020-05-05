@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ExpenseManager.Data.EntityBuilders
 {
-    public class ExpenseBuilder : IEntityBuilder<Expense>
+    public class ExpenseBuilder : IEntityBuilder<DbExpense>
     {
-        public void Build(EntityTypeBuilder<Expense> builder)
+        public void Build(EntityTypeBuilder<DbExpense> builder)
         {
         }
     }
