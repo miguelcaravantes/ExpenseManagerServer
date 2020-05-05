@@ -13,6 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
+using ExpenseManager.Core.Contracts;
+using ExpenseManager.Data.Repositories;
+using ExpenseManager.Configuration.Middlewares;
 
 namespace ExpenseManager.Configuration
 {
@@ -37,10 +41,14 @@ namespace ExpenseManager.Configuration
                        .AllowAnyMethod();
                    });
             });
-
+            services.AddAutoMapper(typeof(Program).Assembly);
 
             services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("database"));
-            
+            services.AddScoped<IUnitOfWork>(services => services.GetRequiredService<DataContext>());
+
+
+            services.AddTransient<IExpensesRepository, EntityExpensesRepository>();
+
 
             services.AddTransient<Executor>();
             AddRequestHandlers(services);
@@ -73,11 +81,13 @@ namespace ExpenseManager.Configuration
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<UnitOfWorkMiddleware>();
 
             app.UseCors();
             app.UseHttpsRedirection();
