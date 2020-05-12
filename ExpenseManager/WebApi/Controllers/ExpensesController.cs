@@ -29,7 +29,7 @@ namespace ExpenseManager.WebApi.Controllers
         {
             var request = new CreateExpenseRequest(expenseDto.Name, expenseDto.Ammount, expenseDto.Description);
             await _executor.SendAsync(request);
-            return Accepted();
+            return Ok();
         }
 
         [HttpGet]
