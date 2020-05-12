@@ -7,6 +7,7 @@ namespace ExpenseManager.Data.EntityBuilders
     {
         public void Build(EntityTypeBuilder<DbExpense> builder)
         {
+            builder.HasKey(e=>e.ExpenseId);
         }
     }
 }
