@@ -63,16 +63,11 @@ namespace ExpenseManager.Configuration
                 typeof(IInteractor<>),
                 typeof(IInteractor<,>),
             };
-            var requestInteractorTypes = typeof(IInteractor<>).Assembly.GetTypes()
-                .Where(t =>
-                    t.GetInterfaces().Any(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()))
-                    ).ToList();
-
-            foreach (var t in requestInteractorTypes)
-            {
-                var handlerInterface = t.GetInterfaces().Single(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()));
-                services.AddTransient(handlerInterface, t);
-            }
+            typeof(IInteractor<>).Assembly.GetTypes()
+                 .Where(t =>
+                     t.GetInterfaces().Any(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()))
+                     ).Select(t => (Implementation: t, Interface: t.GetInterfaces().Single(e => e.IsGenericType && types.Contains(e.GetGenericTypeDefinition()))))
+                     .ToList().ForEach(t => services.AddTransient(t.Interface, t.Implementation));
 
             return services;
 
